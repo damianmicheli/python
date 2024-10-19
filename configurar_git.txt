@@ -1,0 +1,28 @@
+1. Instalar git
+sudo apt install git
+
+2. Configurar usuario
+git config --global user.email "damianmicheli@gmail.com"
+git config --global user.name "Damian Micheli"
+
+3. Crear llave ssh
+ssh-keygen -t ed25519 -C "damianmicheli@gmail.com"
+
+4. Agregar llave al agente ssh
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+
+5. agregar llave a github
+cat ~/.ssh/id_ed25519.pub
+(copiar y pegar en github)
+
+6. prueba de inicio de sesion
+ssh -T git@github.com
+
+7. inicializar repositorio
+git init
+git add .
+git commit -m "first commit"
+git branch -M main
+git remote add origin git@github.com:damianmicheli/python.git
+git push -u origin main
