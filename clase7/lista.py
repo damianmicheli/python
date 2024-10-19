@@ -9,3 +9,11 @@ print(compras)
 compras.append("cereales")
 print(compras)
 # Ahora la lista es ["manzanas", "yogur", "leche", "queso", "cereales"]
+compras.remove('leche')
+print(compras)
+print(len(compras))
+
+indice = 0
+while indice < len(compras):
+        print(f'Producto {indice + 1}: {compras[indice]}')
+        indice += 1
