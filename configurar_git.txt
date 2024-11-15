@@ -19,10 +19,14 @@ cat ~/.ssh/id_ed25519.pub
 6. prueba de inicio de sesion
 ssh -T git@github.com
 
-7. inicializar repositorio
+7.a inicializar repositorio
 git init
 git add .
 git commit -m "first commit"
 git branch -M main
 git remote add origin git@github.com:damianmicheli/python.git
 git push -u origin main
+
+o 7.b clonar
+git clone git@github.com:damianmicheli/python.git
+
