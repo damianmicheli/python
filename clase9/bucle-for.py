@@ -24,3 +24,6 @@ for i in range(5):
 frutas = ["manzana", "banana", "naranja"]
 for i, fruta in enumerate(frutas):
     print(f"Fruta {i+1}: {fruta}")
+
+for _ in range(5):
+    print("text")
