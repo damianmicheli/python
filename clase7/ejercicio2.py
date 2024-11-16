@@ -30,3 +30,5 @@ if encontrado:
     print(f'Producto encontrado: {inventario[indice][0]}, Precio: {inventario[indice][1]:.2f}, Cantidad: {inventario[indice][2]}')
 else:
     print('No se encontro el producto')
+
+print(inventario[10])
