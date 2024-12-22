@@ -18,6 +18,15 @@ def mostrar_menu():
     print("2. Mostrar productos")
     print("3. Salir")
 
+def mostrar_menu():
+    print("\nMenú de Gestión de Inventario:")
+    print("1. Registrar producto")
+    print("2. Mostrar productos")
+    print("3. Actualizar producto")
+    print("4. Eliminar producto")
+    print("5. Buscar producto")
+    print("6. Reporte de Bajo Stock")
+    print("7. Salir")
 
 # Función para leer y validad el precio o la cantidad de un producto
 def leer_dato(tipo):
