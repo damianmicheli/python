@@ -117,14 +117,14 @@ def registrar_producto():
     while precio <= 0:
         print("Error: El precio debe ser mayor a cero.")
         precio = float(input("Ingrese el precio del producto: "))
- 
+
     categoria = input("Ingrese la categoría del producto: ")
 
     # Agregar el producto a la tabla productos
     cursor.execute("INSERT INTO productos (nombre, descripcion, cantidad, precio, categoria) VALUES (?, ?, ?, ?, ?)", (nombre, descripcion, cantidad, precio, categoria))
-   
+
     conexion.commit()
-    
+
     print("Producto registrado con éxito.")
 
     conexion.close()

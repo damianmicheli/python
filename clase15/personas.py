@@ -23,8 +23,7 @@ def crear_tabla_personas():
 
 
 def precargar_datos():
-    
-    
+
     nuevas_personas = [
         ("Esteban", 32, "Mar del Plata"),
         ("Valeria", 27, "Bahía Blanca"),
@@ -59,7 +58,7 @@ def precargar_datos():
 
 # Función para registrar una nueva persona en la base de datos
 def registrar_persona():
-    
+
     conexion = sqlite3.connect("base_datos.db")
     cursor = conexion.cursor()
     
