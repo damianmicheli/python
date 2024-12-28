@@ -23,7 +23,7 @@ from colorama import init, Fore, Back, Style
 def crear_tabla_productos():
     
     # Conectar a la base de datos
-    conexion = sqlite3.connect("base_datos.db") 
+    conexion = sqlite3.connect("inventario.db") 
     cursor = conexion.cursor()
 
     # Crear la tabla productos si no existe
@@ -53,7 +53,7 @@ def precargar_datos():
         ("Manzana", "Fruta fresca y deliciosa", 50, 0.5, "Frutas"),
     ]
 
-    conexion = sqlite3.connect("base_datos.db")
+    conexion = sqlite3.connect("inventario.db")
     cursor = conexion.cursor()
     cursor.execute("SELECT * FROM productos")
     
@@ -88,14 +88,14 @@ def mostrar_menu():
 
         print(Style.BRIGHT + Fore.CYAN + "\nMenú de Gestión de Inventario:")
         print(Style.BRIGHT + Fore.CYAN + "-" * 30)
-        print(Fore.CYAN + "\n📝 1. Registrar producto ")
-        print(Fore.CYAN + "👀 2. Mostrar productos ")
-        print(Fore.CYAN + "🎯 3. Actualizar producto ")
-        print(Fore.CYAN + "❌ 4. Eliminar producto ")
-        print(Fore.CYAN + "🔍 5. Buscar producto ")
-        print(Fore.CYAN + "📉 6. Reporte de Bajo Stock ")
-        print(Fore.CYAN + "🛒 7. Vender producto ")
-        print(Fore.MAGENTA + "\n🚪🚶8. Salir ")
+        print(Fore.CYAN + "\n1. Registrar producto 📝 ")
+        print(Fore.CYAN + "2. Mostrar productos 👀 ")
+        print(Fore.CYAN + "3. Actualizar producto 🎯 ")
+        print(Fore.CYAN + "4. Eliminar producto ❌ ")
+        print(Fore.CYAN + "5. Buscar producto 🔍 ")
+        print(Fore.CYAN + "6. Reporte de Bajo Stock 📉 ")
+        print(Fore.CYAN + "7. Vender producto 🛒 ")
+        print(Fore.MAGENTA + "\n8. Salir 🚪🚶")
 
         opcion = input(Fore.YELLOW + "\nSeleccione una opción: ")
 
@@ -123,7 +123,7 @@ def mostrar_menu():
 # Función para registrar un nuevo producto en la base de datos
 def registrar_producto():
     
-    conexion = sqlite3.connect("base_datos.db")
+    conexion = sqlite3.connect("inventario.db")
     cursor = conexion.cursor()
     
     nombre = input(Fore.YELLOW + "Ingrese el nombre del producto: ")
@@ -153,7 +153,7 @@ def registrar_producto():
 # Función para mostrar todos los productos registrados en la base de datos
 def mostrar_productos():
 
-    conexion = sqlite3.connect("base_datos.db")
+    conexion = sqlite3.connect("inventario.db")
     cursor = conexion.cursor()
     
     cursor.execute("SELECT * FROM productos")
@@ -181,7 +181,7 @@ def mostrar_productos():
 # Función para actualizar la cantidad de un producto específico en la base de datos
 def actualizar_producto():
 
-    conexion = sqlite3.connect("base_datos.db")
+    conexion = sqlite3.connect("inventario.db")
     cursor = conexion.cursor()
 
     codigo = int(input("Ingrese el código del producto que desea actualizar: "))
@@ -201,7 +201,7 @@ def actualizar_producto():
 # Función para eliminar un producto específico de la base de datos
 def eliminar_producto():
     
-    conexion = sqlite3.connect("base_datos.db")
+    conexion = sqlite3.connect("inventario.db")
     cursor = conexion.cursor()
 
     codigo = int(input("Ingrese el código del producto que desea eliminar: "))
@@ -219,7 +219,7 @@ def eliminar_producto():
 
 # Función para buscar un producto en la base de datos
 def buscar_producto():
-    conexion = sqlite3.connect("base_datos.db")
+    conexion = sqlite3.connect("inventario.db")
     cursor = conexion.cursor()
 
     codigo = int(input("Ingrese el código del producto a buscar: "))
@@ -246,7 +246,7 @@ def buscar_producto():
 # Función para generar un reporte de productos con bajo stock
 def reporte_bajo_stock():
 
-    conexion = sqlite3.connect("base_datos.db")
+    conexion = sqlite3.connect("inventario.db")
     cursor = conexion.cursor()
 
     limite = int(input("Ingrese el límite de stock para generar el reporte: "))
@@ -271,7 +271,7 @@ def reporte_bajo_stock():
 # Función para registrar la venta de un producto
 def vender_producto():
 
-    conexion = sqlite3.connect("base_datos.db")
+    conexion = sqlite3.connect("inventario.db")
     cursor = conexion.cursor()
 
     codigo = int(input("Ingrese el código del producto vendido: "))
