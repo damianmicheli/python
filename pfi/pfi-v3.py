@@ -88,7 +88,7 @@ def mostrar_menu():
 
         print(Style.BRIGHT + Fore.CYAN + "\nMenú de Gestión de Inventario:")
         print(Style.BRIGHT + Fore.CYAN + "-" * 30)
-        print(Fore.CYAN + "📝 1. Registrar producto ")
+        print(Fore.CYAN + "\n📝 1. Registrar producto ")
         print(Fore.CYAN + "👀 2. Mostrar productos ")
         print(Fore.CYAN + "🎯 3. Actualizar producto ")
         print(Fore.CYAN + "❌ 4. Eliminar producto ")
