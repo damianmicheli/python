@@ -1,4 +1,23 @@
+#-------------------------------------
+# Talento Tech
+# Proyecto Final Integrador
+#
+# SISTEMA DE GESTION DE INVENTARIO
+#
+# Damián Micheli - 2024
+#-------------------------------------
+
+
+#----------------------
+#  Imports
+#----------------------
+
 import sqlite3
+from colorama import init, Fore, Back, Style
+
+#----------------------
+#  Funciones
+#----------------------
 
 # Función para crear la tabla de productos si aun no existe
 def crear_tabla_productos():
@@ -23,7 +42,7 @@ def crear_tabla_productos():
     conexion.commit()
     conexion.close()
 
-    print("Tabla Productos creada con éxito.")
+    print(Fore.GREEN + "Tabla Productos creada con éxito o ya existía.")
 
 
 #Función que carga datos de prueba si la tabla productos esta vacía
@@ -53,9 +72,9 @@ def precargar_datos():
             
             conexion.commit()
             
-            print(f"Producto {producto} registrado con éxito.")
+            print(Fore.GREEN + f"Producto {producto} registrado con éxito.")
     else:
-        print("Ya existen registros en la tabla Productos. Se omite la carga inicial.")
+        print(Fore.RED + "Ya existen registros en la tabla Productos. Se omite la carga inicial.")
 
     conexion.close()
 
@@ -67,18 +86,18 @@ def mostrar_menu():
 
     while opcion != "8":
 
-        print("\nMenú de Gestión de Inventario:")
-        print("-" * 30)
-        print("1. Registrar producto")
-        print("2. Mostrar productos")
-        print("3. Actualizar producto")
-        print("4. Eliminar producto")
-        print("5. Buscar producto")
-        print("6. Reporte de Bajo Stock")
-        print("7. Vender producto")
-        print("\n8. Salir")
+        print(Style.BRIGHT + Fore.CYAN + "\nMenú de Gestión de Inventario:")
+        print(Style.BRIGHT + Fore.CYAN + "-" * 30)
+        print(Fore.CYAN + "📝 1. Registrar producto ")
+        print(Fore.CYAN + "👀 2. Mostrar productos ")
+        print(Fore.CYAN + "🎯 3. Actualizar producto ")
+        print(Fore.CYAN + "❌ 4. Eliminar producto ")
+        print(Fore.CYAN + "🔍 5. Buscar producto ")
+        print(Fore.CYAN + "📉 6. Reporte de Bajo Stock ")
+        print(Fore.CYAN + "🛒 7. Vender producto ")
+        print(Fore.MAGENTA + "\n🚪🚶8. Salir ")
 
-        opcion = input("\nSeleccione una opción: ")
+        opcion = input(Fore.YELLOW + "\nSeleccione una opción: ")
 
         if opcion == "1":
             registrar_producto()
@@ -95,9 +114,10 @@ def mostrar_menu():
         elif opcion == "7":
             vender_producto()
         elif opcion == "8":
-            print("Saliendo del programa...")
+            print(Fore.BLUE + "\nSaliendo del programa...")
+            print(Fore.BLUE + Style.BRIGHT +  "Gracias por utilizar SISTEMA DE GESTION DE INVENTARIO!\n\n")
         else:
-            print("Opción inválida. Por favor, intente nuevamente.")
+            print(Back.RED + "Opción inválida. Por favor, intente nuevamente.")
                 
 
 # Función para registrar un nuevo producto en la base de datos
@@ -106,16 +126,16 @@ def registrar_producto():
     conexion = sqlite3.connect("base_datos.db")
     cursor = conexion.cursor()
     
-    nombre = input("Ingrese el nombre del producto: ")
-    descripcion = input("Ingrese una breve descripción: ")
-    cantidad = int(input("Ingrese la cantidad disponible: "))
+    nombre = input(Fore.YELLOW + "Ingrese el nombre del producto: ")
+    descripcion = input(Fore.YELLOW + "Ingrese una breve descripción: ")
+    cantidad = int(input(Fore.YELLOW + "Ingrese la cantidad disponible: "))
     while cantidad <= 0:
-            print("Error: La cantidad debe ser mayor a cero.")
-            cantidad = int(input("Ingrese la cantidad disponible: "))
+            print(Back.RED + "Error: La cantidad debe ser mayor a cero.")
+            cantidad = int(input(Fore.YELLOW + "Ingrese la cantidad disponible: "))
 
-    precio = float(input("Ingrese el precio del producto: "))
+    precio = float(input(Fore.YELLOW + "Ingrese el precio del producto: "))
     while precio <= 0:
-        print("Error: El precio debe ser mayor a cero.")
+        print(Back.RED + "Error: El precio debe ser mayor a cero.")
         precio = float(input("Ingrese el precio del producto: "))
 
     categoria = input("Ingrese la categoría del producto: ")
@@ -125,7 +145,7 @@ def registrar_producto():
 
     conexion.commit()
 
-    print("Producto registrado con éxito.")
+    print(Fore.GREEN + "Producto registrado con éxito.")
 
     conexion.close()
 
@@ -141,7 +161,7 @@ def mostrar_productos():
     resultados = cursor.fetchall()
     
     if resultados:
-        print("\nListado de productos registrados:")
+        print(Style.BRIGHT + Fore.BLUE + "\nListado de productos registrados:")
         print("-" * 30)
         
         for producto in resultados:
@@ -153,73 +173,152 @@ def mostrar_productos():
             print(f"Categoría: {producto[5]}\n")
             print("-" * 30)
     else:
-        print("El inventario está vacío.")
+        print(Fore.RED + "El inventario está vacío.")
     
     conexion.close()
 
 
+# Función para actualizar la cantidad de un producto específico en la base de datos
 def actualizar_producto():
-    foo = "bar"
-    # codigo = int(input("Ingrese el código del producto que desea actualizar: "))
-    # if codigo in inventario:
-    #     nueva_cantidad = int(input("Ingrese la nueva cantidad: "))
-    #     inventario[codigo]["cantidad"] = nueva_cantidad
-    #     print("Producto", codigo, "actualizado con éxito.")
-    # else:
-    #     print("Producto no encontrado.")
+
+    conexion = sqlite3.connect("base_datos.db")
+    cursor = conexion.cursor()
+
+    codigo = int(input("Ingrese el código del producto que desea actualizar: "))
+    nueva_cantidad = int(input("Ingrese la nueva cantidad: "))
+    
+    cursor.execute("UPDATE productos SET cantidad = ? WHERE id_producto = ?",(nueva_cantidad, codigo))
+    
+    if cursor.rowcount > 0:
+        print(Fore.GREEN + f"Producto {codigo} actualizado con éxito.")
+    else:
+        print("Producto no encontrado.")
+    
+    conexion.commit()
+    conexion.close()
 
 
+# Función para eliminar un producto específico de la base de datos
 def eliminar_producto():
-    foo = "bar"
-    # codigo = int(input("Ingrese el código del producto que desea eliminar: "))
-    # if codigo in inventario:
-    #     del inventario[codigo]
-    #     print("Producto con código", codigo, "eliminado con éxito.")
-    # else:
-    #     print("Producto no encontrado.")
+    
+    conexion = sqlite3.connect("base_datos.db")
+    cursor = conexion.cursor()
 
+    codigo = int(input("Ingrese el código del producto que desea eliminar: "))
+    
+    cursor.execute("DELETE FROM productos WHERE id_producto = ?", (codigo,))
+    
+    if cursor.rowcount > 0:
+        print(Fore.GREEN + f"Producto con código {codigo} eliminado con éxito.")
+    else:
+        print("Producto no encontrado.")
+    
+    conexion.commit()
+    conexion.close()
+
+
+# Función para buscar un producto en la base de datos
 def buscar_producto():
-    foo = "bar"
-    # codigo = int(input("Ingrese el código del producto a buscar: "))
-    # if codigo in inventario:
-    #     datos = inventario[codigo]
-    #     print("Nombre:", datos['nombre'])
-    #     print("Descripción:", datos['descripcion'])
-    #     print("Cantidad:", datos['cantidad'])
-    #     print("Precio:", datos['precio'])
-    #     print("Categoría:", datos['categoria'])
-    # else:
-    #   print("Producto no encontrado.")
+    conexion = sqlite3.connect("base_datos.db")
+    cursor = conexion.cursor()
 
+    codigo = int(input("Ingrese el código del producto a buscar: "))
+
+    cursor.execute("SELECT * FROM productos WHERE id_producto = ?", (codigo,))
+    
+    resultado = cursor.fetchone()
+
+    if resultado:
+        print("\nInformación del producto encontrado:")
+        print("-" * 30)
+        print("Nombre:", resultado[1])
+        print("Descripción:", resultado[2])
+        print("Cantidad:", resultado[3])
+        print("Precio:", resultado[4])
+        print("Categoría:", resultado[5])
+
+    else:
+        print("Producto no encontrado.")
+
+    conexion.close()
+
+
+# Función para generar un reporte de productos con bajo stock
 def reporte_bajo_stock():
-    foo = "bar"
-    # limite = int(input("Ingrese el límite de stock para generar el reporte: "))
-    # print("Productos con stock igual o inferior a", limite, ":")
-    # for codigo, datos in inventario.items():
-    #     if datos["cantidad"] <= limite:
-    #         print("Código:", codigo)
-    #         print("Nombre:", datos['nombre'])
-    #         print("Cantidad:", datos['cantidad'])
 
+    conexion = sqlite3.connect("base_datos.db")
+    cursor = conexion.cursor()
+
+    limite = int(input("Ingrese el límite de stock para generar el reporte: "))
+
+
+    cursor.execute("SELECT * FROM productos WHERE cantidad <= ?", (limite,))
+    resultados = cursor.fetchall()
+
+    if resultados:
+        print(f"\nProductos con stock igual o inferior a {limite}:")
+        print("-" * 30)
+
+        for producto in resultados:
+            print(f"Código: {producto[0]}, Nombre: {producto[1]}, Cantidad: {producto[3]}")
+    else:
+        print("No se encontraron productos con stock bajo.")
+    
+    conexion.close()
+
+
+
+# Función para registrar la venta de un producto
 def vender_producto():
-    foo = "bar"
-    # codigo = int(input("Ingrese el código del producto vendido: "))
-    # if codigo in inventario:
-    #     cantidad_vendida = int(input("Ingrese cantidad vendida: "))
-    #     stock = inventario[codigo]["cantidad"]
-    #     if cantidad_vendida <= stock:
-    #         inventario[codigo]["cantidad"] = stock - cantidad_vendida
-    #         print("Venta registrada.")
-    #     else:
-    #         print("Error: No hay stock suficiente para completar la venta.")
-    # else:
-    #     print("Error: Producto no encontrado.")
+
+    conexion = sqlite3.connect("base_datos.db")
+    cursor = conexion.cursor()
+
+    codigo = int(input("Ingrese el código del producto vendido: "))
+
+    cursor.execute("SELECT * FROM productos WHERE id_producto = ?", (codigo,))
+    
+    resultado = cursor.fetchone()
+
+    if resultado:
+        cantidad_vendida = int(input("Ingrese cantidad vendida: "))
+
+        while cantidad_vendida <= 0:
+            print(Back.RED + "Error: La cantidad vendida debe ser mayor a cero.")
+            cantidad_vendida = int(input("Ingrese cantidad vendida: "))
+
+        stock = resultado[3]
+        nueva_cantidad = stock - cantidad_vendida
+
+        if nueva_cantidad >= 0:
+            cursor.execute("UPDATE productos SET cantidad = ? WHERE id_producto = ?",(nueva_cantidad, codigo))
+            
+            if cursor.rowcount > 0:
+                print(Fore.GREEN + "Venta registrada.")
+            else:
+                print("Ocurrió un error inesperado.")
+
+            conexion.commit()
+        else:
+            print("Error: No hay stock suficiente para completar la venta.")
+
+    else:
+        print("Producto no encontrado.")
+
+    conexion.close()
 
 
-# Invocar la función para crear la tabla
+#----------------------
+#  Programa principal   
+#----------------------
+
+# Inicializar Colorama
+init(autoreset=True)
+
+# Invocar la función para crear la tabla si no existe
 crear_tabla_productos()
 
-# Invocar la función para insertar datos
+# Invocar la función para insertar datos si la tabla está vacía
 precargar_datos()
 
 # Iniciar el programa llamando al menú principal
